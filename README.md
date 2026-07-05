@@ -2,11 +2,7 @@
 
 # 🛡️ Cloud OT Honeypot with SIEM Integration
 
-[![GCP](https://img.shields.io/badge/Cloud-GCP-4285F4?style=for-the-badge&logo=google-cloud&logoColor=white)](https://cloud.google.com)
-[![T-Pot](https://img.shields.io/badge/Honeypot-T--Pot%2024.04-FF006E?style=for-the-badge&logo=docker&logoColor=white)](https://github.com/telekom-security/tpotce)
-[![Splunk](https://img.shields.io/badge/SIEM-Splunk%20Cloud-000000?style=for-the-badge&logo=splunk&logoColor=white)](https://splunk.com)
-[![Suricata](https://img.shields.io/badge/IDS-Suricata-FF6B35?style=for-the-badge&logo=suricata&logoColor=white)](https://suricata.io)
-[![Status](https://img.shields.io/badge/Status-Live-brightgreen?style=for-the-badge)](https://github.com/ronankongala/ot-honeypot-gcp)
+
 
 ```
  ██████╗ ████████╗    ██╗  ██╗ ██████╗ ███╗   ██╗███████╗██╗   ██╗██████╗  ██████╗ ████████╗
@@ -19,7 +15,6 @@
 
 **Internet-facing OT honeypot capturing real attacker traffic — 66,000+ events in first hour**
 
-[🗺️ Architecture](#architecture) • [🚀 Deployment](#deployment) • [📊 Findings](#threat-intelligence-findings) • [📸 Screenshots](#screenshots)
 
 </div>
 
