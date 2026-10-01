@@ -13,26 +13,26 @@
  ╚═════╝    ╚═╝       ╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚══════╝   ╚═╝   ╚═╝      ╚═════╝    ╚═╝  
 ```
 
-**Internet-facing OT honeypot capturing real attacker traffic -- 66,000+ events in first hour**
+**Internet-facing OT honeypot on GCP that logged 66,185 events from live attacker traffic in its first hour**
 
 
 </div>
 
 ---
 
-## ⚡ Live Stats (First Hour)
+## Stats From the First Hour
 
 <div align="center">
 
-| 🎯 Events Captured | 🌍 Countries | 🔥 Top Port | ⚠️ Suricata Alerts |
+| Events Captured | Countries | Top Port | Suricata Alerts |
 |:---:|:---:|:---:|:---:|
-| **66,185+** | **Pakistan, Vietnam** | **Port 23 (Telnet)** | **15,315 AF-PACKET** |
+| **66,185** | **Pakistan, Vietnam** | **Port 23 (Telnet)** | **15,315 AF-PACKET** |
 
 </div>
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -76,24 +76,24 @@
 
 ---
 
-## 🛠️ Technologies Used
+## Technologies Used
 
 | Category | Tools |
 |---|---|
-| ☁️ Cloud Infrastructure | GCP VPC, Compute Engine, Cloud NAT, Firewall Rules |
-| 🍯 Honeypot Frameworks | T-Pot 24.04, Conpot, Cowrie, Medpot, CiscoASA emulator |
-| 🏭 OT Protocols Emulated | Modbus/502, DNP3/20000, IEC104, IPMI, Kamstrup 382 |
-| 🔍 IDS | Suricata with Emerging Threats ruleset |
-| 📊 SIEM | Splunk Cloud (Universal Forwarder), Kibana/ELK |
-| 📋 Log Sources | Suricata eve.json, Conpot logs, SSH/Telnet honeypot logs |
-| 🔎 Vulnerability Scanning | Nmap 7.80 (service version detection) |
-| 🐋 Containerization | Docker Compose (20+ containers) |
+| Cloud Infrastructure | GCP VPC, Compute Engine, Cloud NAT, Firewall Rules |
+| Honeypot Frameworks | T-Pot 24.04, Conpot, Cowrie, Medpot, CiscoASA emulator |
+| OT Protocols Emulated | Modbus/502, DNP3/20000, IEC104, IPMI, Kamstrup 382 |
+| IDS | Suricata with Emerging Threats ruleset |
+| SIEM | Splunk Cloud (Universal Forwarder), Kibana/ELK |
+| Log Sources | Suricata eve.json, Conpot logs, SSH/Telnet honeypot logs |
+| Vulnerability Scanning | Nmap 7.80 (service version detection) |
+| Containerization | Docker Compose (20+ containers) |
 
 ---
 
-## 🚀 Deployment
+## Deployment
 
-### Phase 1 -- GCP Network Setup
+### Phase 1: GCP Network Setup
 
 ```bash
 # VPC and subnets
@@ -107,7 +107,7 @@ gcloud compute firewall-rules create allow-honeypot-ports \
   --source-ranges=0.0.0.0/0
 ```
 
-### Phase 2 -- T-Pot Installation
+### Phase 2: T-Pot Installation
 
 ```bash
 git clone https://github.com/telekom-security/tpotce
@@ -116,7 +116,7 @@ cd tpotce
 sudo reboot
 ```
 
-### Phase 3 -- Splunk SIEM Integration
+### Phase 3: Splunk SIEM Integration
 
 ```bash
 # Install Universal Forwarder
@@ -132,7 +132,7 @@ sudo /opt/splunkforwarder/bin/splunk add monitor /home/user/tpotce/data/conpot/l
 sudo /opt/splunkforwarder/bin/splunk add monitor /home/user/tpotce/data/honeypots/log -sourcetype honeypots
 ```
 
-### Phase 4 -- Vulnerability Scan
+### Phase 4: Vulnerability Scan
 
 ```bash
 nmap -sV -p 22,80,502,20000,23 <honeypot-external-ip>
@@ -140,57 +140,30 @@ nmap -sV -p 22,80,502,20000,23 <honeypot-external-ip>
 
 ---
 
-## 📸 Screenshots
+## Screenshots
 
-### GCP VM Running
-![VM Running](Screenshots/01-tpot-vm-running.png)
-
-### T-Pot Docker Containers (20+ services)
-![T-Pot Containers](Screenshots/02-tpot-containers.png)
-
-### T-Pot Service Status
-![T-Pot Status](Screenshots/03-tpot-status.png)
-
-### T-Pot Web Dashboard
-![T-Pot Dashboard](Screenshots/04-tpot-dashboard.png)
-
-### Live Attack Feed -- Vietnam Telnet Scan
-![Attack Map](Screenshots/05-attack-map-livefeed.png)
-
-### Kibana Overview Dashboard
-![Kibana Overview](Screenshots/06-kibana-dashboard.png)
-
-### Kibana -- Attack Details (Country + OS Fingerprint)
-![Kibana Details](Screenshots/07-kibana-details.png)
-
-### Suricata IDS Alerts + Top Attacker ASNs
-![Suricata Alerts](Screenshots/08-kibana-suricata.png)
-
-### Splunk Universal Forwarder -- Active SSL Connection
-![Splunk Forwarder](Screenshots/09-splunk-forwarder-connected.png)
-
-### Nmap Service Version Scan
-![Nmap Scan](Screenshots/10-nmap-scan.png)
-
-### Splunk Cloud -- 66,185 Events Indexed
-![Splunk Events](Screenshots/11-splunk-events.png)
-
-### Splunk -- Top Suricata Alert Signatures
-![Splunk Dashboard](Screenshots/12-splunk-dashboard.png)
+| | |
+|:---:|:---:|
+| ![VM Running](Screenshots/01-tpot-vm-running.png)<br>GCP VM running | ![T-Pot Containers](Screenshots/02-tpot-containers.png)<br>T-Pot Docker containers (20+ services) |
+| ![T-Pot Status](Screenshots/03-tpot-status.png)<br>T-Pot service status | ![T-Pot Dashboard](Screenshots/04-tpot-dashboard.png)<br>T-Pot web dashboard |
+| ![Attack Map](Screenshots/05-attack-map-livefeed.png)<br>Live attack feed: Vietnam Telnet scan | ![Kibana Overview](Screenshots/06-kibana-dashboard.png)<br>Kibana overview dashboard |
+| ![Kibana Details](Screenshots/07-kibana-details.png)<br>Kibana attack details (country and OS fingerprint) | ![Suricata Alerts](Screenshots/08-kibana-suricata.png)<br>Suricata IDS alerts and top attacker ASNs |
+| ![Splunk Forwarder](Screenshots/09-splunk-forwarder-connected.png)<br>Splunk Universal Forwarder with an active SSL connection | ![Nmap Scan](Screenshots/10-nmap-scan.png)<br>Nmap service version scan |
+| ![Splunk Events](Screenshots/11-splunk-events.png)<br>Splunk Cloud events arriving in the main index | ![Splunk Dashboard](Screenshots/12-splunk-dashboard.png)<br>Top Suricata alert signatures across 66,185 events |
 
 ---
 
-## 🔍 Threat Intelligence Findings
+## Threat Intelligence Findings
 
 ### Attack Summary
 
 | Metric | Value |
 |---|---|
-| Total events captured | 66,185+ |
+| Total events captured | 66,185 |
 | Unique attacker countries | Pakistan, Vietnam |
 | Top attacker ASN | Cyber Internet Services AS9541 (6 hits) |
 | Second ASN | FPT Telecom AS18403 (4 hits) |
-| Most targeted port | Port 23 -- Telnet |
+| Most targeted port | Port 23 (Telnet) |
 | Top Suricata signature | AF-PACKET truncated packet (15,315 hits) |
 | Attacker OS (P0f) | Linux 2.2.x-3.x, Windows NT kernel |
 | Attack pattern | Automated 1-minute interval Telnet scanning |
@@ -198,15 +171,15 @@ nmap -sV -p 22,80,502,20000,23 <honeypot-external-ip>
 
 ### Key Observations
 
-The honeypot attracted automated scanners **within minutes** of going live. IP `210.245.120.117` (Vietnam / FPT Telecom) probed Telnet port 23 at precise 1-minute intervals -- a hallmark of botnet credential stuffing against industrial device login prompts.
+Automated scanners found the honeypot within minutes of it going live. IP `210.245.120.117` (Vietnam, FPT Telecom) probed Telnet port 23 at exact 1-minute intervals, the pattern of a botnet trying credentials against industrial device login prompts.
 
-Suricata flagged 15,315+ AF-PACKET truncated packet events, consistent with high-speed internet-wide scan tools (Masscan/ZMap) performing availability checks before launching targeted attacks.
+Suricata logged 15,315 AF-PACKET truncated packet events. High-speed internet-wide scanners such as Masscan or ZMap, checking which hosts are up before a targeted attack, are the likely source.
 
-No Modbus (502) or DNP3 (20000) OT protocol traffic was observed in the first hour, which is expected -- OT-targeted attacks are lower frequency but more sophisticated than generic internet scanning.
+No Modbus (502) or DNP3 (20000) traffic showed up in the first hour. Attacks aimed at OT protocols are much rarer than generic internet scanning, so an hour is too short a window to expect them.
 
 ---
 
-## 🗺️ MITRE ATT&CK Mapping
+## MITRE ATT&CK Mapping
 
 | Technique | ID | Observed Evidence |
 |---|---|---|
@@ -217,7 +190,7 @@ No Modbus (502) or DNP3 (20000) OT protocol traffic was observed in the first ho
 
 ---
 
-## 🔒 Hardening Applied
+## Hardening Applied
 
 - Egress traffic blocked via GCP deny-all firewall rule
 - SSH restricted to GCP IAP range only (`35.235.240.0/20`)
@@ -227,15 +200,14 @@ No Modbus (502) or DNP3 (20000) OT protocol traffic was observed in the first ho
 
 ---
 
-## 📋 Frameworks Referenced
+## Frameworks Referenced
 
-- **NIST CSF** -- Detect (DE.CM-1: Monitor network for events, DE.CM-7: Monitor for unauthorized activity)
-- **MITRE ATT&CK for ICS** -- Initial Access, Discovery techniques
-- **ICS-CERT** threat intelligence practices
+- **NIST CSF** Detect: DE.CM-1 (monitor the network for events) and DE.CM-7 (monitor for unauthorized activity)
+- **MITRE ATT&CK for ICS**: Initial Access and Discovery techniques
 
 ---
 
-## 👤 Author
+## Author
 
-**Ronan Kongala** -- MS Cybersecurity, Northeastern University  
+**Ronan Kongala**, MS Cybersecurity, Northeastern University  
 Cybersecurity Intern (AI/ML) @ Abbott | [GitHub](https://github.com/ronankongala) | [LinkedIn](https://linkedin.com/in/ronankongala)
